@@ -53,7 +53,7 @@ window.addEventListener("DOMContentLoaded", () => {
     /*
      * TODO: Show admin link if is-admin flag in sessionStorage is "true"
      */
-    if (sessionStorage.getItem ("is-admin") === true) {
+    if (sessionStorage.getItem ("is-admin") === "true") {
         adminLinkEle.setAttribute ("hidden", false);
     }
     else {
@@ -265,8 +265,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
         for (const recipe of recipes) {
             const liEle = document.createElement ("li");
-            liEle.innerHTML = `<h3>${recipe.name}</h3>
-                                <p>${recipe.instructions}`;
+            liEle.innerHTML = `<a href="${BASE_URL}/recipes?id=${recipe.id}">
+                                <h3>${recipe.name}</h3>
+                                <p>${recipe.instructions}</p>`;
 
             recipeListEle.appendChild (liEle);
         }
