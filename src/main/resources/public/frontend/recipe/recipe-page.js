@@ -130,7 +130,7 @@ window.addEventListener("DOMContentLoaded", () => {
                                 headers: {
                                     "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
                                 },
-                                body: requestBody
+                                body: JSON.stringify(requestBody)
                             });
                 if (response.ok) {
                     //clear inputs
@@ -179,7 +179,7 @@ window.addEventListener("DOMContentLoaded", () => {
                                 headers: {
                                     "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
                                 },
-                                body: requestBody
+                                body: JSON.stringify(requestBody)
                             });
                 if (response.ok) {
                     //clear inputs
@@ -265,10 +265,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
         for (const recipe of recipes) {
             const liEle = document.createElement ("li");
-            liEle.innerHTML = `<a href="${BASE_URL}/recipe-page?id=${recipe.id}">
-                                    <h3>${recipe.name}</h3>
-                                    <p>${recipe.instructions}</p>
-                                </a>`;
+            liEle.innerHTML = `<a href="/recipe-page?id=${recipe.id}">
+                                <h3>${recipe.name}</h3>
+                                <p>${recipe.instructions}</p>
+                            </a>`;
 
             recipeListEle.appendChild (liEle);
         }

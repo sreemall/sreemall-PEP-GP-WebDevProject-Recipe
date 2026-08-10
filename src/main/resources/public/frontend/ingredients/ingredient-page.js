@@ -60,7 +60,7 @@ async function addIngredient() {
                                 headers: {
                                     "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
                                 },
-                                body: {name}
+                                body: JSON.stringify({ name })
                             });
 
             if (response.ok) {
