@@ -46,15 +46,15 @@ window.addEventListener("DOMContentLoaded", () => {
     /*
      * TODO: Show logout button if auth-token exists in sessionStorage
      */
-    if (sessionStorage.getItem ("auth-token")) {
-        logoutBtn.setAttribute ("hidden", false);
+    if (sessionStorage.getItem ("auth-token") === "true") {
+        logoutBtn.hidden = false;
     }
 
     /*
      * TODO: Show admin link if is-admin flag in sessionStorage is "true"
      */
     if (sessionStorage.getItem ("is-admin") === "true") {
-        adminLinkEle.setAttribute ("hidden", false);
+        adminLinkEle.hidden = false;
     }
     // else {
     //     adminLinkEle.setAttribute ("hidden", true);
