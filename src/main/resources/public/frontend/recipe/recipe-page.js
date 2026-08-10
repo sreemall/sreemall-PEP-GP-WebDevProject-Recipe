@@ -239,7 +239,7 @@ window.addEventListener("DOMContentLoaded", () => {
     async function getRecipes() {
         // Implement get logic here
         try {
-            response = await fetch (`${BASE_URL}/recipes`, {method: "GET",
+            const response = await fetch (`${BASE_URL}/recipes`, {method: "GET",
                                 headers: {
                                     "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
                                 }});
