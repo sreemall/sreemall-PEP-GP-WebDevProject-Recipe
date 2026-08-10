@@ -12,21 +12,29 @@ const BASE_URL = "http://localhost:8081"; // backend URL
  * - searchInput (optional for future use)
  * - adminLink (if visible conditionally)
  */
-
+    const addIngredientNameEle = document.getElementById ("add-ingredient-name-input");
+    const deleteIngredientNameEle = document.getElementById ("delete-ingredient-name-input");
+    const ingredientListContainerEle = document.getElementById ("ingredient-list");
 /* 
  * TODO: Attach 'onclick' events to:
  * - "add-ingredient-submit-button" → addIngredient()
  * - "delete-ingredient-submit-button" → deleteIngredient()
  */
+const addBtn = document.getElementById ("add-ingredient-submit-button");
+const deleteBtn = document.getElementById ("add-ingredient-submit-button");
+
+addBtn.addEventListener ("click", addIngredient);
+deleteBtn.addEventListener ("click", deleteIngredient);
 
 /*
  * TODO: Create an array to keep track of ingredients
  */
+    let ingredients = [];
 
 /* 
  * TODO: On page load, call getIngredients()
  */
-
+    window.addEventListener ("DOMContentLoaded", getIngredients);
 
 /**
  * TODO: Add Ingredient Function
@@ -41,6 +49,34 @@ const BASE_URL = "http://localhost:8081"; // backend URL
  */
 async function addIngredient() {
     // Implement add ingredient logic here
+    const name = addIngredientNameEle.value.trim ();
+    if (!name) {
+        alert ("Ingredient Name is Required to Add Ingredient!");
+    }
+    else {
+        try {
+            const response = await fetch (`${BASE_URL}/ingredients`, {
+                                method: "POST",
+                                headers: {
+                                    "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
+                                },
+                                body: {name}
+                            });
+
+            if (response.ok) {
+                document.querySelectorAll ("input").innerHTML = "";
+                getIngredients ();
+            }
+            else {
+                alert ("Error during Add an Ingredient! Error: ", response.status);
+            }
+
+        }
+        catch (error) {
+            console.log ("Error: ", error.message);
+            alert ("Error: ", error.message);
+        }
+    }
 }
 
 
@@ -55,6 +91,20 @@ async function addIngredient() {
  */
 async function getIngredients() {
     // Implement get ingredients logic here
+    try {
+        const response = await fetch (`${BASE_URL}/ingredients`, {
+                                    method: "GET",
+                                    headers: {
+                                        "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
+                                    }
+                                });
+        ingredients = await response.json ();
+        refreshIngredientList ();
+    }
+    catch (error) {
+        console.log ("Error: ", error.message);
+        alert ("Error: ", error.message);
+    }
 }
 
 
@@ -71,6 +121,31 @@ async function getIngredients() {
  */
 async function deleteIngredient() {
     // Implement delete ingredient logic here
+    const name = deleteIngredientNameEle.value.trim ();
+    const ingredientDeleteId = "";
+    for (const ingredient of ingredients) {
+        if (ingredient.name === name) {
+            ingredientDeleteId = ingredient.id;
+            break;
+        }
+    }
+    try {
+        const response = fetch (`${BASE_URL}/ingredients/${ingredientDeleteId}`, {
+                                    method: "DELETE",
+                                    headers: {
+                                        "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
+                                    }});
+        if (response.ok) {
+            getIngredients ();
+        }
+        else {
+            alert ("Error: ", (await response).status, " during Delete an Ingredient");
+        }
+    }
+    catch (error) {
+        console.log ("Error: ", error.message);
+        alert ("Error: ", error.message);
+    }
 }
 
 
@@ -86,4 +161,10 @@ async function deleteIngredient() {
  */
 function refreshIngredientList() {
     // Implement ingredient list rendering logic here
+    ingredientListContainerEle.innerHTML = "";
+    for (const ingredient of ingredients) {
+        const liEle = document.createElement ("li");
+        liEle.innerHTML = `<p>${ingredient.name}</p>`
+        ingredientListContainerEle.appendChild (liEle);
+    }
 }

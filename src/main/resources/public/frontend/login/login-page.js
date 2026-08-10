@@ -11,12 +11,16 @@ const BASE_URL = "http://localhost:8081"; // backend URL
  * - login button
  * - logout button (optional, for token testing)
  */
+const usernameEle = document.getElementById ("login-input");
+const passwordEle = document.getElementById ("password-input");
+const loginBtn = document.getElementById ("login-button");
+const logoutBtn = document.getElementById ("logout-button");
 
 /* 
  * TODO: Add click event listener to login button
  * - Call processLogin on click
  */
-
+loginBtn.addEventListener ("click", processLogin);
 
 /**
  * TODO: Process Login Function
@@ -43,7 +47,14 @@ async function processLogin() {
     // TODO: Retrieve username and password from input fields
     // - Trim input and validate that neither is empty
 
+    const username = usernameEle.value.trim ();
+    const password = passwordEle.value.trim ();
+
     // TODO: Create a requestBody object with username and password
+    let requestBody = {};
+    if (username && password) {
+        requestBody = {username, password};
+    }
 
     const requestOptions = {
         method: "POST",
@@ -62,12 +73,15 @@ async function processLogin() {
 
     try {
         // TODO: Send POST request to http://localhost:8081/login using fetch with requestOptions
+        const response = await fetch ("http://localhost:8081/login", requestOptions);
+       
 
         // TODO: If response status is 200
         // - Read the response as text
         // - Response will be a space-separated string: "token123 true"
         // - Split the string into token and isAdmin flag
         // - Store both in sessionStorage using sessionStorage.setItem()
+        
 
         // TODO: Optionally show the logout button if applicable
 
@@ -80,9 +94,27 @@ async function processLogin() {
         // TODO: For any other status code
         // - Alert the user with a generic error like "Unknown issue!"
 
+        if (response.status === 200) {
+            const text = await response.text ();
+            const [token, isAdmin] = text.split (" ");
+            sessionStorage.setItem ("auth-token", token);
+            sessionStorage.setItem ("is-admin", isAdmin);
+
+            logoutBtn.setAttribute ("hidden", false);
+            setTimeout (() => (window.location.href = "/recipes"), 500);
+        }
+        else if (response.status == 401) {
+            alert ("Incorrect login!");
+        }
+        else {
+            alert ("Unknown issue!");
+        }
+
     } catch (error) {
         // TODO: Handle any network or unexpected errors
         // - Log the error and alert the user
+        console.log ("Error: ", error.message);
+        alert (error.message);
     }
 }
 
