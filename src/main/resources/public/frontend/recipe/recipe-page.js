@@ -56,9 +56,9 @@ window.addEventListener("DOMContentLoaded", () => {
     if (sessionStorage.getItem ("is-admin") === "true") {
         adminLinkEle.setAttribute ("hidden", false);
     }
-    else {
-        adminLinkEle.setAttribute ("hidden", true);
-    }
+    // else {
+    //     adminLinkEle.setAttribute ("hidden", true);
+    // }
 
     /*
      * TODO: Attach event handlers
