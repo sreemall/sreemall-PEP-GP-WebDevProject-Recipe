@@ -286,7 +286,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
         const authToken = sessionStorage.getItem ("auth-token");
             try {
-                const response = fetch (`${BASE_URL}/logout`, {method:"POST",
+                const response = await fetch (`${BASE_URL}/logout`, {method:"POST",
                                         headers: {
                                             "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
                                         },
