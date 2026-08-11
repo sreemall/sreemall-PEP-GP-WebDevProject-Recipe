@@ -103,7 +103,7 @@ async function processLogin() {
             console.log ("9999 session token: ", token, " is-admin: ", isAdmin, " :", sessionStorage.getItem("is-admin"))
             
             logoutBtn.setAttribute ("hidden", false);
-            setTimeout (() => (window.location.href = "http://localhost:8083/login/recipe-page.html"), 500);
+            setTimeout (() => (window.location.href = "http://localhost:8083/recipe/recipe-page.html"), 500);
         }
         else if (response.status == 401) {
             alert ("Incorrect login!");

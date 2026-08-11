@@ -265,7 +265,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
         for (const recipe of recipes) {
             const liEle = document.createElement ("li");
-            liEle.innerHTML = `<a href="/recipe-page?id=${recipe.id}">
+            liEle.innerHTML = `<a href="/recipe/recipe-page.html?id=${recipe.id}">
                                 <h3>${recipe.name}</h3>
                                 <p>${recipe.instructions}</p>
                             </a>`;
