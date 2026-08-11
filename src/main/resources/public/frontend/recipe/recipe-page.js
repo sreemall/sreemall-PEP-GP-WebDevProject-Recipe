@@ -54,7 +54,10 @@ window.addEventListener("DOMContentLoaded", () => {
     /*
      * TODO: Show admin link if is-admin flag in sessionStorage is "true"
      */
-    adminLinkEle.hidden = !(sessionStorage.getItem ("is-admin") === "true");
+    function displayAdminLink () {
+        adminLinkEle.hidden = !(sessionStorage.getItem ("is-admin") === "true");
+    }
+    displayAdminLink ();
     
     console.log ("SESSION STORAGE: ", sessionStorage.getItem ("is-admin"), " auth-token", sessionStorage.getItem("auth-token"));
 
@@ -291,7 +294,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 
                 if (response.ok) {
                     sessionStorage.clear ();
-                    window.location.href = `${BASE_URL}/login`;
+                    window.location.href = "http://localhost:8083/login/login-page.html";
                 }
                 else {
                     alert(`Error: ${error.message}`);
