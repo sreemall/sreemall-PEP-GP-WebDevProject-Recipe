@@ -124,7 +124,7 @@ async function deleteIngredient() {
     const name = deleteIngredientNameEle.value.trim ();
 
     const ingredientDelete = ingredients.find ((ingredient) => ingredient.name === name);
-    if (!ingredient) {
+    if (!ingredientDelete) {
         alert ("Ingredient not found!");
         return;
     }

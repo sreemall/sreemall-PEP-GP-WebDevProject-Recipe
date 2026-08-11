@@ -167,7 +167,7 @@ window.addEventListener("DOMContentLoaded", () => {
         else {
             const recipeUpdate = recipes.find(recipe => recipe.name === name);
 
-            if (!recipe) {
+            if (!recipeUpdate) {
                 alert("Recipe not found!");
                 return;
             }
