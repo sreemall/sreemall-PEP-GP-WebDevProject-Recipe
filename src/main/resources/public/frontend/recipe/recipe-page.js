@@ -162,20 +162,16 @@ window.addEventListener("DOMContentLoaded", () => {
             alert ("Recipe Name and Instructions are required to Update a Recipe!");
         }
         else {
-            let recipeUpdateId = "";
-            const recipe = recipes.find(recipe => recipe.name === name);
+            const recipeUpdate = recipes.find(recipe => recipe.name === name);
 
             if (!recipe) {
                 alert("Recipe not found!");
                 return;
             }
-            else {
-                recipeUpdateId = recipe.id;
-            }
-        
+
             try {
                 const requestBody = {name, instructions};
-                const response = await fetch (`${BASE_URL}/recipes/${recipeUpdateId}`, {
+                const response = await fetch (`${BASE_URL}/recipes/${recipeUpdate.id}`, {
                                 method: "PUT",
                                 headers: {
                                     "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
@@ -205,26 +201,23 @@ window.addEventListener("DOMContentLoaded", () => {
     async function deleteRecipe() {
         // Implement delete logic here
         const name = deleteRecipeNameEle.value.trim ();
-        let recipeDeleteId = "";
-        const recipe = recipes.find(recipe => recipe.name === name);
+
+        const recipeDelete = recipes.find(recipe => recipe.name === name);
 
         if (!recipe) {
             alert("Recipe not found!");
             return;
         }
-        else {
-            recipeUpdateId = recipe.id;
-        }
 
         try {
-            const response = await fetch (`${BASE_URL}/recipes/${recipeDeleteId}`, {
+            const response = await fetch (`${BASE_URL}/recipes/${recipeDelete.id}`, {
                             method: "DELETE",
                             headers: {
                                 "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
                             }
                         });
             if (response.ok) {
-                recipes = recipes.filter ((recipe) => recipe.id !== recipeDeleteId);
+                recipes = recipes.filter ((recipe) => recipe.id !== recipeDelete.id);
             }
         }
         catch (error) {

@@ -68,13 +68,13 @@ async function addIngredient() {
                 getIngredients ();
             }
             else {
-                alert ("Error during Add an Ingredient! Error: ", response.status);
+                alert (`Error during Add an Ingredient! Error: ${response.status}`);
             }
 
         }
         catch (error) {
             console.log ("Error: ", error.message);
-            alert ("Error: ", error.message);
+            alert (`Error: ${error.message}`);
         }
     }
 }
@@ -103,7 +103,7 @@ async function getIngredients() {
     }
     catch (error) {
         console.log ("Error: ", error.message);
-        alert ("Error: ", error.message);
+        alert (`Error: ${error.message}`);
     }
 }
 
@@ -122,15 +122,14 @@ async function getIngredients() {
 async function deleteIngredient() {
     // Implement delete ingredient logic here
     const name = deleteIngredientNameEle.value.trim ();
-    const ingredientDeleteId = "";
-    for (const ingredient of ingredients) {
-        if (ingredient.name === name) {
-            ingredientDeleteId = ingredient.id;
-            break;
-        }
+
+    const ingredientDelete = ingredients.find ((ingredient) => ingredient.name === name);
+    if (!ingredient) {
+        alert ("Ingredient not found!");
+        return;
     }
     try {
-        const response = fetch (`${BASE_URL}/ingredients/${ingredientDeleteId}`, {
+        const response = fetch (`${BASE_URL}/ingredients/${ingredientDelete.id}`, {
                                     method: "DELETE",
                                     headers: {
                                         "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
@@ -139,12 +138,12 @@ async function deleteIngredient() {
             getIngredients ();
         }
         else {
-            alert ("Error: ", (await response).status, " during Delete an Ingredient");
+            alert(`Error: ${(await response).status} during Delete an Ingredient`);
         }
     }
     catch (error) {
         console.log ("Error: ", error.message);
-        alert ("Error: ", error.message);
+        alert (`Error: ${error.message}`);
     }
 }
 
