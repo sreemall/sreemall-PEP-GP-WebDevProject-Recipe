@@ -53,12 +53,8 @@ window.addEventListener("DOMContentLoaded", () => {
     /*
      * TODO: Show admin link if is-admin flag in sessionStorage is "true"
      */
-    if (sessionStorage.getItem ("is-admin") === "true") {
-        adminLinkEle.hidden = false;
-    }
-    // else {
-    //     adminLinkEle.setAttribute ("hidden", true);
-    // }
+    adminLinkEle.hidden = !(sessionStorage.getItem ("is-admin") === "true");
+    
 
     /*
      * TODO: Attach event handlers
@@ -284,13 +280,13 @@ window.addEventListener("DOMContentLoaded", () => {
     async function processLogout() {
         // Implement logout logic here
 
-        const authToken = sessionStorage.getItem ("auth-token");
+        //const authToken = sessionStorage.getItem ("auth-token");
             try {
                 const response = await fetch (`${BASE_URL}/logout`, {method:"POST",
                                         headers: {
                                             "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
-                                        },
-                                        body:authToken });
+                                        }
+                                        });
                 
                 if (response.ok) {
                     sessionStorage.clear ();
