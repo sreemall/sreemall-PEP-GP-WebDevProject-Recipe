@@ -55,6 +55,7 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     adminLinkEle.hidden = !(sessionStorage.getItem ("is-admin") === "true");
     
+    console.log ("SESSION STORAGE: ", sessionStorage.getItem ("is-admin"), " auth-token", sessionStorage.getItem("auth-token"));
 
     /*
      * TODO: Attach event handlers
