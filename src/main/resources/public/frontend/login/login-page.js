@@ -100,6 +100,8 @@ async function processLogin() {
             sessionStorage.setItem ("auth-token", token);
             sessionStorage.setItem ("is-admin", isAdmin);
 
+            console.log ("9999 session token: ", token, " is-admin: ", isAdmin, " :", sessionStorage.getItem("is-admin"))
+            
             logoutBtn.setAttribute ("hidden", false);
             setTimeout (() => (window.location.href = "/recipe-page"), 500);
         }

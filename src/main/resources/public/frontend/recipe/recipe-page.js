@@ -8,6 +8,7 @@ let recipes = [];
 
 // Wait for DOM to fully load before accessing elements
 window.addEventListener("DOMContentLoaded", () => {
+    console.log ("9999 in recipes page.....: ", sessionStorage.getItem ("is-admin"));
 
     /* 
      * TODO: Get references to various DOM elements
@@ -99,7 +100,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
         catch (error) {
             console.log ("Error: ", error.message);
-            alert ("Error: ", error.message);
+            alert(`Error: ${error.message}`);
         }
 
     }
@@ -139,7 +140,7 @@ window.addEventListener("DOMContentLoaded", () => {
             }
             catch (error) {
                 console.log ("Error: ", error.message);
-                alert ("Error: ", error.message);
+                alert(`Error: ${error.message}`);
             }
             
         }
@@ -162,11 +163,14 @@ window.addEventListener("DOMContentLoaded", () => {
         }
         else {
             let recipeUpdateId = "";
-            for (const recipe of recipes) {
-                if (recipe.name === name) {
-                    recipeUpdateId = recipe.id;
-                    break;
-                }
+            const recipe = recipes.find(recipe => recipe.name === name);
+
+            if (!recipe) {
+                alert("Recipe not found!");
+                return;
+            }
+            else {
+                recipeUpdateId = recipe.id;
             }
         
             try {
@@ -186,7 +190,7 @@ window.addEventListener("DOMContentLoaded", () => {
             }
             catch (error) {
                 console.log ("Error: ", error.message);
-                alert ("Error: ", error.message);
+                alert(`Error: ${error.message}`);
             }
         }
     }
@@ -202,11 +206,14 @@ window.addEventListener("DOMContentLoaded", () => {
         // Implement delete logic here
         const name = deleteRecipeNameEle.value.trim ();
         let recipeDeleteId = "";
-        for (const recipe of recipes) {
-            if (recipe.name === name) {
-                recipeDeleteId = recipe.id;
-                break;
-            }
+        const recipe = recipes.find(recipe => recipe.name === name);
+
+        if (!recipe) {
+            alert("Recipe not found!");
+            return;
+        }
+        else {
+            recipeUpdateId = recipe.id;
         }
 
         try {
@@ -222,7 +229,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
         catch (error) {
             console.log ("Error: ", error.message);
-            alert ("Error: ", error.message);
+            alert(`Error: ${error.message}`);
         }
     }
 
@@ -246,7 +253,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
         catch (error) {
             console.log ("Error: ", error.message);
-            alert ("Error: ", error.message);
+            alert(`Error: ${error.message}`);
         }
     }
 
@@ -294,12 +301,12 @@ window.addEventListener("DOMContentLoaded", () => {
                     window.location.href = `${BASE_URL}/login`;
                 }
                 else {
-                    alert ("Error during logout!");
+                    alert(`Error: ${error.message}`);
                 }
             }
         catch (error) {
             console.log ("Error: ", error.message);
-            alert ("Error: ", error.message);
+            alert(`Error: ${error.message}`);
         }
     }
 
