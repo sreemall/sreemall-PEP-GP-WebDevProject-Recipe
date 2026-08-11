@@ -101,7 +101,7 @@ async function processLogin() {
             sessionStorage.setItem ("is-admin", isAdmin);
 
             logoutBtn.setAttribute ("hidden", false);
-            setTimeout (() => (window.location.href = "/recipes"), 500);
+            setTimeout (() => (window.location.href = "/recipe-page"), 500);
         }
         else if (response.status == 401) {
             alert ("Incorrect login!");
