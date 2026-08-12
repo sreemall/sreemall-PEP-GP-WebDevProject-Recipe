@@ -130,7 +130,7 @@ async function deleteIngredient() {
         return;
     }
     try {
-        const response = fetch (`${BASE_URL}/ingredients/${ingredientDelete.id}`, {
+        const response = await fetch (`${BASE_URL}/ingredients/${ingredientDelete.id}`, {
                                     method: "DELETE",
                                     headers: {
                                         "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
