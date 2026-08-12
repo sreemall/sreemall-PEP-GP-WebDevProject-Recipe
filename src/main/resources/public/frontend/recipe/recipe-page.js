@@ -47,9 +47,7 @@ window.addEventListener("DOMContentLoaded", () => {
     /*
      * TODO: Show logout button if auth-token exists in sessionStorage
      */
-    if (sessionStorage.getItem ("auth-token") === "true") {
-        logoutBtn.hidden = false;
-    }
+    logoutBtn.hidden = !sessionStorage.getItem ("auth-token");
 
     /*
      * TODO: Show admin link if is-admin flag in sessionStorage is "true"
@@ -129,6 +127,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 const response = await fetch (`${BASE_URL}/recipes`, {
                                 method: "POST",
                                 headers: {
+                                    "Content-Type": "application/json",
                                     "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
                                 },
                                 body: JSON.stringify(requestBody)
@@ -207,8 +206,13 @@ window.addEventListener("DOMContentLoaded", () => {
 
         const recipeDelete = recipes.find(recipe => recipe.name === name);
 
-        if (!recipe) {
+        if (!recipeDelete) {
             alert("Recipe not found!");
+            return;
+        }
+
+        if (sessionStorage.getItem("is-admin") !== "true") {
+            alert("Only admins can delete recipes!");
             return;
         }
 
@@ -221,6 +225,7 @@ window.addEventListener("DOMContentLoaded", () => {
                         });
             if (response.ok) {
                 recipes = recipes.filter ((recipe) => recipe.id !== recipeDelete.id);
+                refreshRecipeList()
             }
         }
         catch (error) {

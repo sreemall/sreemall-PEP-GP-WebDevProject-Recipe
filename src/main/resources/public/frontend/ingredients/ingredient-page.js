@@ -21,7 +21,7 @@ const BASE_URL = "http://localhost:8081"; // backend URL
  * - "delete-ingredient-submit-button" → deleteIngredient()
  */
 const addBtn = document.getElementById ("add-ingredient-submit-button");
-const deleteBtn = document.getElementById ("add-ingredient-submit-button");
+const deleteBtn = document.getElementById ("delete-ingredient-submit-button");
 
 addBtn.addEventListener ("click", addIngredient);
 deleteBtn.addEventListener ("click", deleteIngredient);
@@ -58,13 +58,14 @@ async function addIngredient() {
             const response = await fetch (`${BASE_URL}/ingredients`, {
                                 method: "POST",
                                 headers: {
+                                    "Content-Type": "application/json",
                                     "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
                                 },
                                 body: JSON.stringify({ name })
                             });
 
             if (response.ok) {
-                document.querySelectorAll ("input").innerHTML = "";
+                document.querySelectorAll ("input").forEach(element => element.value = "");
                 getIngredients ();
             }
             else {
